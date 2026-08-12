@@ -70,8 +70,15 @@ function buildSsml(text, voice, rate, pitch) {
 }
 
 function findHeaderEnd(buf) {
-  for (let i = 0; i buf 3;++)    ifbuf[i] ===13 buf[i 1 ===10 buf[i +  buf] return;
- buf concatChunks(chunks) {
+  for (let i = 0; i < buf.length - 3; i++) {
+    if (buf[i] === 13 && buf[i + 1] === 10 && buf[i + 2] === 13 && buf[i + 3] === 10) {
+      return i + 4;
+    }
+  }
+  return buf.length;
+}
+
+function concatChunks(chunks) {
   let total = 0;
   for (const c of chunks) total += c.byteLength;
   const out = new Uint8Array(total);
